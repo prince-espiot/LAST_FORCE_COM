@@ -8,15 +8,11 @@
 
 #include "index.h"
 #include "style.h"
-#include "javascript.h"
-
 
 const char* ssid = "DESKTOP-7847I2M 5817";
 const char* password = ")90P450f";
 
 ESP8266WebServer server(80);
-
-HX711 scale(D3, D2); //HX711 scale(dat, sclk); // Dat = pin6; SCK= 7.
 
 void handleRoot() {          
     server.send_P ( 200, "text/html", index_html);   
@@ -25,16 +21,9 @@ void handleCss() {
       server.send_P ( 200, "text/css", style_css);
 }
 
-void handlehx_json(){
-  
-  server.send ( 200, "application/json",javascript);
-  }
-
-float calibration_factor = -80;
-
 void setup() {
   // put your setup code here, to run once:
-  Serial.begin(115200);
+  Serial.begin(9600);
   delay(1000);
   
   WiFi.begin(ssid, password); //--> Connect to your WiFi router
@@ -66,28 +55,11 @@ void setup() {
 
    server.on("/",handleRoot); 
    server.on("/style.css",handleCss);
-   //server.on("/data.txt",handlehx_json);
    server.begin();
 
 }
 
 void loop() {
   // put your main code here, to run repeatedly:
-  float data;
-  data = Hx_Reading();
 server.handleClient();
 }
-
-float Hx_Reading(){
-  scale.set_scale(calibration_factor);
-  scale.tare();
-  float unitss;
-  float ounces;
-  unitss = scale.get_units(),10;
-  if (unitss < 0)
-  {
-    unitss = 0.00;
-  }
-  ounces = unitss * 0.035274;
-  return unitss;
-  }
