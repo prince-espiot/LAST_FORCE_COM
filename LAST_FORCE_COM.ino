@@ -66,7 +66,7 @@ void setup() {
 
    server.on("/",handleRoot); 
    server.on("/style.css",handleCss);
-   server.on("/data.txt",handlehx_json);
+   //server.on("/data.txt",handlehx_json);
    server.begin();
 
 }
