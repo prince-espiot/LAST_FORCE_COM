@@ -16,7 +16,7 @@ const char* password = ")90P450f";
 
 ESP8266WebServer server(80);
 
-HX711 scale(3, 2); //HX711 scale(dat, sclk); // Dat = pin6; SCK= 7.
+HX711 scale(D3, D2); //HX711 scale(dat, sclk); // Dat = pin6; SCK= 7.
 
 void handleRoot() {          
     server.send_P ( 200, "text/html", index_html);   
